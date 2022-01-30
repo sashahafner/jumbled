@@ -25,7 +25,7 @@ dfsumm <- function(x) {
        s[2:4, i] <- NA
      } else if(iclass%in%c('factor', 'ordered')) { 
        s[2:4, i] <- levels(yc)[c(1, length(levels(yc)), round(mean(as.integer(yc))))] 
-     } else if(iclass == 'numeric') {
+     } else if(iclass %in% c('integer', 'numeric')) {
        s[2:4, i] <- as.character(signif(c(min(yc), max(yc), mean(yc)), 3)) 
      } else if(iclass == 'logical') {
        s[2:4, i] <- c(as.character(as.logical(c(min(yc), max(yc)))), paste(mean(yc), 'TRUE'))
