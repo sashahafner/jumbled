@@ -1,5 +1,5 @@
-# expand.grid that accepts (any number of) data frame arguments
-expand.grid.df <- function(...) {
+# expand.grid analog that accepts (any number of) data frame (only) arguments
+dfcombos <- function(...) {
 
   d <- list(...)
   
