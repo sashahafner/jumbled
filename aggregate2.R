@@ -15,7 +15,7 @@ aggregate2 <- function(x, by, FUN, ...) {
     if (i == 1) {
       res <- d
     } else {
-      res <- cbind(res, d[, !names(d) %in% names(by)])
+      res <- cbind(res, d[, !names(d) %in% names(by), drop = FALSE])
     }
   }
 
