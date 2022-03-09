@@ -4,13 +4,12 @@
 # Example
 #dat <- data.frame(grp = rep(1:3, each = 3), a = rnorm(9), b = runif(9))
 #dat
-#aggregate(dat[, c('a', 'b')], dat[, c('grp'), drop = FALSE], mean)
-#aggregate2(dat[, c('a', 'b')], dat[, c('grp'), drop = FALSE], list(mean = mean, sd = sd, n = length))
+#aggregate2(dat, x = c('a', 'b'), by = 'grp', FUN = list(mean = mean, sd = sd, n = length))
 
-aggregate2 <- function(x, by, FUN, ...) {
+aggregate2 <- function(dat, x, by, FUN, ...) {
 
   for (i in 1:length(FUN)) {
-    d <- aggregate(x = x, by = by, FUN = FUN[[i]]) 
+    d <- aggregate(x = dat[, x, drop = FALSE], by = dat[, by, drop = FALSE], FUN = FUN[[i]]) 
     names(d)[!names(d) %in% names(by)] <- paste0(names(d)[!names(d) %in% names(by)], '.', names(FUN)[[i]])
     if (i == 1) {
       res <- d
