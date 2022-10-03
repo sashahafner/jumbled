@@ -92,3 +92,18 @@ rounddf(dat, digits = c(0, 4), func = signif)
 rounddf(dat, digits = c(2, 2), func = signif)
 ```
 
+## `ggsave2x`
+Save a ggplot2 figure in one than one format.
+
+```{r}
+ggplot(economics, aes(date, unemploy)) +
+  geom_line(colour = "red")
+```
+
+```{r, eval=FALSE}
+ggsave2x('economics', width = 5, height = 5)
+```
+
+Saves png and pdf by default, add more with `type` argument.
+Use `...` optional arguments for more flexibility.
+
