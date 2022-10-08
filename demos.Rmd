@@ -1,9 +1,12 @@
 ---
-title: 'Demonstrations'
+title: '*jumbled* demonstrations'
 output: pdf_document
 author: Sasha D. Hafner
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 ---
+
+# Overview
+This document demonstrates usage of some of the function in the jumbled repo, available from [github.com/sashahafner/jumbled](github.com/sashahafner/jumbled).
 
 # Load functions
 
@@ -29,8 +32,49 @@ aggregate2(warpbreaks, x = 'breaks', by = c('wool', 'tension'),
 
 Accepts multiple variables (as in `aggregate`).
 
+```{r}
+aggregate2(na.omit(airquality), x = c('Ozone', 'Temp'), by = 'Month', 
+	   FUN = list(mean = mean, sd = sd, n = length))
+```
+
+# aggregate3
+
+Similar, but uses formula notation.
+Example from `aggregate` help file:
+
+```{r}
+aggregate(breaks ~ wool + tension, data = warpbreaks, mean)
+```
+
+To include sd and n, use `aggregate3`:
+
+```{r}
+aggregate3(warpbreaks, breaks ~ wool + tension, 
+	   FUN = list(mean = mean, sd = sd, n = length))
+```
+
+For multiple response variables, use `cbind()`.
+
+```{r}
+aggregate3(airquality, cbind(Ozone, Temp) ~ Month, 
+	   FUN = list(mean = mean, sd = sd, n = length))
+```
+
+So `Ozone + Temp ~ Month` doesn't work, because `aggregate()` can't handle it propertly.
+It would be nice to address this limitation in the future.
+
 # dfcombos
 Something like `expand.grid` for data frames.
+Can accept vectors too, but resulting name is poor.
+
+```{r}
+d1 <- data.frame(name = letters[1:5], x = 1.1)
+d2 <- data.frame(b = 1:3)
+dfcombos(d1, d2)
+
+v1 <- c(TRUE, FALSE)
+dfcombos(d1, d2, v1)
+```
 
 # dfsumm
 Generate a data frame summary more detailed and compact than `summary` output.
@@ -93,9 +137,10 @@ rounddf(dat, digits = c(2, 2), func = signif)
 ```
 
 ## `ggsave2x`
-Save a ggplot2 figure in one than one format.
+Save a ggplot2 figure in more than one format in a single call.
 
 ```{r}
+library(ggplot2)
 ggplot(economics, aes(date, unemploy)) +
   geom_line(colour = "red")
 ```
