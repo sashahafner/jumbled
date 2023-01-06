@@ -10,7 +10,6 @@ But presently, users should just download the relevant scripts and load them in 
 source("dfsumm.R")
 ```
 
-
 # Feedback
 These functions were primarily written for my own usage, but I hope others find them useful.
 If you have any requests or find any bugs, submit them through the Issues page.
