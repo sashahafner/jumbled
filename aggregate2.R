@@ -10,7 +10,9 @@ aggregate2 <- function(dat, x, by, FUN, ...) {
 
   for (i in 1:length(FUN)) {
     d <- aggregate(x = dat[, x, drop = FALSE], by = dat[, by, drop = FALSE], FUN = FUN[[i]], ...) 
-    names(d)[!names(d) %in% by] <- paste0(names(d)[!names(d) %in% by], '.', names(FUN)[[i]])
+    if (length(names(FUN)) > 0) {
+      names(d)[!names(d) %in% by] <- paste0(names(d)[!names(d) %in% by], '.', names(FUN)[[i]])
+    }
     if (i == 1) {
       res <- d
     } else {
