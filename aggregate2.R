@@ -8,6 +8,15 @@
 
 aggregate2 <- function(dat, x, by, FUN, ...) {
 
+  # Convert data.table to data frame
+  DT <- FALSE
+  if (class(dat)[1] == 'data.table') {
+    dat <- as.data.frame(dat)
+    if (requireNamespace('data.table')) {
+      DT <- TRUE
+    }
+  }
+
   for (i in 1:length(FUN)) {
     d <- aggregate(x = dat[, x, drop = FALSE], by = dat[, by, drop = FALSE], FUN = FUN[[i]], ...) 
     if (length(names(FUN)) > 0) {
@@ -18,6 +27,10 @@ aggregate2 <- function(dat, x, by, FUN, ...) {
     } else {
       res <- cbind(res, d[, !names(d) %in% by, drop = FALSE])
     }
+  }
+
+  if (DT) {
+    res <- data.table(res)
   }
 
   return(res)
