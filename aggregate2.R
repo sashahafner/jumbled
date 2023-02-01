@@ -12,7 +12,7 @@ aggregate2 <- function(dat, x, by, FUN, sep = '.', ...) {
   DT <- FALSE
   if (class(dat)[1] == 'data.table') {
     dat <- as.data.frame(dat)
-    if (requireNamespace('data.table')) {
+    if (requireNamespace('data.table', quietly = TRUE)) {
       DT <- TRUE
     }
   }
