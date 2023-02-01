@@ -3,8 +3,8 @@ rounddf <- function(x, digits = rep(2, ncol(x)), func = round) {
 
   # Convert data.table to data frame
   DT <- FALSE
-  if (class(dat)[1] == 'data.table') {
-    dat <- as.data.frame(dat)
+  if (class(x)[1] == 'data.table') {
+    x <- as.data.frame(x)
     if (requireNamespace('data.table', quietly = TRUE)) {
       DT <- TRUE
     }
@@ -22,7 +22,7 @@ rounddf <- function(x, digits = rep(2, ncol(x)), func = round) {
   }
 
   if (DT) {
-    res <- data.table(res)
+    x <- data.table(x)
   }
 
   return(x)
