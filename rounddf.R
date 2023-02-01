@@ -1,5 +1,15 @@
 
 rounddf <- function(x, digits = rep(2, ncol(x)), func = round) {
+
+  # Convert data.table to data frame
+  DT <- FALSE
+  if (class(dat)[1] == 'data.table') {
+    dat <- as.data.frame(dat)
+    if (requireNamespace('data.table', quietly = TRUE)) {
+      DT <- TRUE
+    }
+  }
+
   if (length(digits) == 1) {
     digits <- rep(digits, ncol(x))
   } else if (length(digits) != ncol(x)) {
@@ -9,6 +19,10 @@ rounddf <- function(x, digits = rep(2, ncol(x)), func = round) {
 
   for(i in 1:ncol(x)) {
     if(class(x[, i, drop = TRUE])[1] == 'numeric') x[, i] <- func(x[, i], digits[i])
+  }
+
+  if (DT) {
+    res <- data.table(res)
   }
 
   return(x)
