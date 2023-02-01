@@ -6,7 +6,7 @@
 #dat
 #aggregate2(dat, x = c('a', 'b'), by = 'grp', FUN = list(mean = mean, sd = sd, n = length))
 
-aggregate2 <- function(dat, x, by, FUN, ...) {
+aggregate2 <- function(dat, x, by, FUN, sep = '.', ...) {
 
   # Convert data.table to data frame
   DT <- FALSE
@@ -19,7 +19,7 @@ aggregate2 <- function(dat, x, by, FUN, ...) {
 
   for (i in 1:length(FUN)) {
     d <- aggregate(x = dat[, x, drop = FALSE], by = dat[, by, drop = FALSE], FUN = FUN[[i]], ...) 
-    if (length(names(FUN)) > 0) {
+    if (length(names(FUN)) > 0 & names(FUN)[[i]] != '') {
       names(d)[!names(d) %in% by] <- paste0(names(d)[!names(d) %in% by], '.', names(FUN)[[i]])
     }
     if (i == 1) {
