@@ -113,6 +113,13 @@ plot(a ~ time, data = dat)
 points(a ~ time, data = dat2, cex = 0.5, col = 'blue')
 ```
 
+Now woks for data.tables too.
+
+```{r}
+dat <- data.table::as.data.table(dat)
+dat2 <- interpm(dat, 'time', c('a', 'b', 'c'))
+```
+
 # logaxis
 Add log axis to base R plots.
 

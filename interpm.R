@@ -3,9 +3,9 @@
 interpm <- function(dat, x, ys, ...) {
 
   for (i in ys) {
-    rout <- which(is.na(dat[, i])) 
+    rout <- which(is.na(dat[[i]])) 
     if (length(rout) > 0) {
-      dat[rout, i] <- approx(dat[-rout, x], dat[-rout, i], xout = dat[rout, x], ...)$y 
+      dat[[i]][rout] <- approx(dat[[x]][-rout], dat[[i]][-rout], xout = dat[[x]][rout], ...)$y 
     } 
   }
 
