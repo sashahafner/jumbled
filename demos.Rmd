@@ -120,6 +120,36 @@ dat <- data.table::as.data.table(dat)
 dat2 <- interpm(dat, 'time', c('a', 'b', 'c'))
 ```
 
+```{r}
+dat <- data.frame(time = rep(1:10, 3), group = rep(c('a', 'b', 'c'), each = 10), a = rnorm(30), b = rnorm(30), c = rnorm(30))
+dat[5:9, -1:-2] <- NA
+dat[c(20, 22), 'a'] <- NA
+
+dat
+```
+
+```{r}
+interpm(dat, 'time', c('a', 'b', 'c'), by = 'group')
+```
+
+```{r}
+interpm(dat, 'time', c('a', 'b', 'c'), by = 'group', rule = 2)
+```
+
+```{r}
+dat <- data.table::as.data.table(dat)
+dat
+```
+
+```{r}
+interpm(dat, 'time', c('a', 'b', 'c'), by = 'group')
+```
+
+```{r}
+interpm(dat, 'time', c('a', 'b', 'c'), by = 'group', rule = 2)
+```
+
+
 # logaxis
 Add log axis to base R plots.
 
