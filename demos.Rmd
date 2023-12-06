@@ -167,11 +167,30 @@ Round complete data frames.
 dat <- data.frame(a = 1:10, b = rnorm(10), c = letters[1:10])
 dat
 
+
 rounddf(dat)
 rounddf(dat, digits = c(0, 4))
 rounddf(dat, digits = c(0, 4), func = signif)
 rounddf(dat, digits = c(2, 2), func = signif)
 ```
+
+Trailing zeroes are dropped when written out (although this does not show up in R console).
+Avoid with `pad = TRUE`, which converts adds trailing zeroes and converts column to character.
+
+
+```{r}
+set.seed(124)
+dat <- data.frame(a = 1:10, b = rnorm(10), c = letters[1:10])
+dat
+summary(dat)
+
+rounddf(dat)
+rounddf(dat, pad = TRUE)
+dat <- rounddf(dat, pad = TRUE)
+summary(dat)
+```
+
+
 
 ## `ggsave2x`
 Save a ggplot2 figure in more than one format in a single call.
