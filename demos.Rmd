@@ -331,26 +331,24 @@ fintegrate(x, y, 'right', value = 'total')
 fintegrate(x, y, 'trap', value = 'total')
 ```
 
-
-
-
+Note that data need not be sorted by x.
 
 ```{r}
-dd <- data.frame(x = c(1, 2, 5, 3, 10), y = c(10, 20, 5, 0, 15))
+x <- 0:10
+y <- exp(-x)
+```
 
-dd <- data.frame(x = c(1, 2, 3, 5, 10), y = c(10, 20, 0, 5, 15))
+```{r}
+fintegrate(x, y, 'midpoint')
+```
 
-dd <- data.frame(x = 1:10, y = 1:10)
+```{r}
+x[1] <- 4
+x[5] <- 0
+y <- exp(-x)
+```
 
-x <- dd$x
-y <- dd$y
-start <- 0
-end <- 20
-
-fintegrate(dd$x, dd$y, 'midpoint')
-fintegrate(dd$x, dd$y, 'left')
-fintegrate(dd$x, dd$y, 'right')
-fintegrate(dd$x, dd$y, 'trap')
-
+```{r}
+fintegrate(x, y, 'midpoint')
 ```
 
