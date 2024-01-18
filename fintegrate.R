@@ -1,0 +1,42 @@
+# Integration of interval-based rate measurements
+
+fintegrate <- function(x, y, method = 'midpoint', start = min(x), end = max(x), ystart = y[which.min(x)], value = 'all') {
+
+  method <- substr(tolower(method), 1, 1)
+
+  if (length(x) != length(y)) {
+    stop('Lengths of x and y are not equal.')
+  }
+
+  # Sort
+  ord <- (1:length(x))[order(x)]
+  y <- y[order(x)]
+  x <- x[order(x)]
+
+  if (method == 'l') {
+    a <- cumsum(y * diff(c(start, x)))
+  }
+
+  if (method == 'r') {
+    a <- cumsum(y * diff(c(x, end)))
+  }
+
+  if (method == 'm') {
+    a <- cumsum(y * (diff(c(x, end)) / 2 + diff(c(start, x)) / 2))
+  }
+
+  if (method == 't') {
+    x <- c(start, x)
+    y <- c(ystart, y)
+    a <- cumsum((y[-length(y)] + diff(y) / 2) * diff(x)) 
+    x <- x[-1]
+    y <- y[-1]
+  }
+
+  if (value == 'all') {
+    return(a[ord])
+  } else if (value == 'total') {
+    return(a[which.max(x)])
+  }
+
+}

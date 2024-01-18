@@ -208,3 +208,149 @@ ggsave2x('economics', width = 5, height = 5)
 Saves png and pdf by default, add more with `type` argument.
 Use `...` optional arguments for more flexibility.
 
+
+## `fintegrate`
+Integrate *f*lux measurements for emission.
+
+```{r}
+source('fintegrate.R')
+```
+
+### 1. Linear
+
+```{r}
+x <- 0:10
+y <- 0:10
+plot(x, y)
+```
+
+Exact integral is `10 * 10 / 2 = 50`.
+
+```{r}
+fintegrate(x, y, 'midpoint')
+fintegrate(x, y, 'left')
+fintegrate(x, y, 'right')
+fintegrate(x, y, 'trap')
+```
+
+Note differences on the way up.
+
+```{r}
+plot(0:10, fintegrate(x, y, 'midpoint'), ylim = c(0, 60))
+lines(0:10, fintegrate(x, y, 'left'), col = 'red')
+lines(0:10, fintegrate(x, y, 'right'), col = 'blue')
+lines(0:10, fintegrate(x, y, 'trap'), col = 'green')
+```
+
+Leave out 0 (say first measurement is at time = 1).
+
+```{r}
+x <- 1:10
+y <- 1:10
+plot(x, y)
+```
+
+Exact integral depends on what occurred before t = 1.
+
+```{r}
+fintegrate(x, y, 'midpoint')
+fintegrate(x, y, 'left')
+fintegrate(x, y, 'right')
+fintegrate(x, y, 'trap')
+```
+
+Can incorporate assumptions.
+
+```{r}
+fintegrate(x, y, 'midpoint', start = 0)
+fintegrate(x, y, 'left', start = 0)
+fintegrate(x, y, 'right', start = 0)
+fintegrate(x, y, 'trap', start = 0, ystart = 0)
+```
+
+# Nonlinear
+
+```{r}
+x <- 1:10
+y <- exp(-x)
+plot(x, y, type = 'l')
+```
+
+Exact integral from 1:10 is `exp(-10) - exp(-1)` = 0.3678.
+From 0 it is 1.0.
+
+```{r}
+fintegrate(x, y, 'midpoint', value = 'total')
+fintegrate(x, y, 'left', value = 'total')
+fintegrate(x, y, 'right', value = 'total')
+fintegrate(x, y, 'trap', value = 'total')
+```
+
+None does very well.
+
+Start at 0.
+
+```{r}
+x <- 0:10
+y <- exp(-x)
+plot(x, y, type = 'l')
+```
+
+```{r}
+fintegrate(x, y, 'midpoint', value = 'total')
+fintegrate(x, y, 'left', value = 'total')
+fintegrate(x, y, 'right', value = 'total')
+fintegrate(x, y, 'trap', value = 'total')
+```
+
+Prove that all methods become accurate with very high resolution.
+
+```{r}
+x <- 0:100 / 10
+y <- exp(-x)
+plot(x, y, type = 'l')
+```
+
+```{r}
+fintegrate(x, y, 'midpoint', value = 'total')
+fintegrate(x, y, 'left', value = 'total')
+fintegrate(x, y, 'right', value = 'total')
+fintegrate(x, y, 'trap', value = 'total')
+```
+
+```{r}
+x <- 0:10000 / 1000
+y <- exp(-x)
+plot(x, y, type = 'l')
+```
+
+```{r}
+fintegrate(x, y, 'midpoint', value = 'total')
+fintegrate(x, y, 'left', value = 'total')
+fintegrate(x, y, 'right', value = 'total')
+fintegrate(x, y, 'trap', value = 'total')
+```
+
+
+
+
+
+```{r}
+dd <- data.frame(x = c(1, 2, 5, 3, 10), y = c(10, 20, 5, 0, 15))
+
+dd <- data.frame(x = c(1, 2, 3, 5, 10), y = c(10, 20, 0, 5, 15))
+
+dd <- data.frame(x = 1:10, y = 1:10)
+
+x <- dd$x
+y <- dd$y
+start <- 0
+end <- 20
+
+fintegrate(dd$x, dd$y, 'midpoint')
+fintegrate(dd$x, dd$y, 'left')
+fintegrate(dd$x, dd$y, 'right')
+fintegrate(dd$x, dd$y, 'trap')
+
+```
+
