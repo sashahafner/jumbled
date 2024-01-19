@@ -288,7 +288,7 @@ fintegrate(x, y, 'trap', value = 'total')
 ```
 
 ```{r}
-plot(0:10, -exp(-(0:10)) + exp(-min(0:10)))
+plot(0:10, -exp(-(0:10)) + exp(-min(0:10)), col = 'red')
 points(x, -exp(-x) + exp(-min(x)), ylim = c(0, 0.7))
 lines(x, fintegrate(x, y, 'midpoint'), col = 'orange')
 lines(x, fintegrate(x, y, 'left'), col = 'red')
@@ -296,8 +296,25 @@ lines(x, fintegrate(x, y, 'right'), col = 'blue')
 lines(x, fintegrate(x, y, 'trap'), col = 'green', lty = 2)
 ```
 
-None does very well.
+None is perfect, but midpoint and trapezoid (identical in this implementation) are the best, only slightly overestimating.
+Note that they all do poorly compared to a true integral that starts at 0 (red points).
+This cannot really be helped--how could we infer the true high values of y close to 0 from these limited measurements?
 
+```{r}
+x <- 0:10
+plot(x, exp(-x))
+```
+
+The `start` argument can extend the first rate back to 0 or any arbitrary starting point, which helps a bit.
+
+```{r}
+x <- 1:10
+plot(0:10, -exp(-(0:10)) + exp(-min(0:10)), col = 'red')
+points(x, -exp(-x) + exp(-min(x)), ylim = c(0, 0.7))
+lines(x, fintegrate(x, y, 'midpoint', start = 0), col = 'orange')
+```
+
+But measurements are needed at or closer to 0 to do really well with this function.
 Start at 0.
 
 ```{r}
@@ -321,7 +338,7 @@ lines(x, fintegrate(x, y, 'right'), col = 'blue')
 lines(x, fintegrate(x, y, 'trap'), col = 'green', lty = 2)
 ```
 
-Prove that all methods become accurate with very high resolution.
+We can prove that all methods become accurate with very high resolution.
 
 ```{r}
 x <- 0:100 / 10
