@@ -22,7 +22,8 @@ fintegrate <- function(x, y, method = 'midpoint', start = min(x), end = max(x), 
   }
 
   if (method == 'm') {
-    a <- cumsum(y * (diff(c(x, end)) / 2 + diff(c(start, x)) / 2))
+    #a <- cumsum(y * (diff(c(x, end)) / 2 + diff(c(start, x)) / 2))
+    a <- cumsum(c(0, y[-length(y)] * diff(x)) / 2 +  y * diff(c(start, x)) / 2)
   }
 
   if (method == 't') {

@@ -236,10 +236,11 @@ fintegrate(x, y, 'trap')
 Note differences on the way up.
 
 ```{r}
-plot(0:10, fintegrate(x, y, 'midpoint'), ylim = c(0, 60))
+plot(0:10, x * y / 2, ylim = c(0, 60))
+lines(0:10, fintegrate(x, y, 'midpoint'), col = 'orange')
 lines(0:10, fintegrate(x, y, 'left'), col = 'red')
 lines(0:10, fintegrate(x, y, 'right'), col = 'blue')
-lines(0:10, fintegrate(x, y, 'trap'), col = 'green')
+lines(0:10, fintegrate(x, y, 'trap'), col = 'green', lty = 2)
 ```
 
 Leave out 0 (say first measurement is at time = 1).
@@ -286,6 +287,15 @@ fintegrate(x, y, 'right', value = 'total')
 fintegrate(x, y, 'trap', value = 'total')
 ```
 
+```{r}
+plot(0:10, -exp(-(0:10)) + exp(-min(0:10)))
+points(x, -exp(-x) + exp(-min(x)), ylim = c(0, 0.7))
+lines(x, fintegrate(x, y, 'midpoint'), col = 'orange')
+lines(x, fintegrate(x, y, 'left'), col = 'red')
+lines(x, fintegrate(x, y, 'right'), col = 'blue')
+lines(x, fintegrate(x, y, 'trap'), col = 'green', lty = 2)
+```
+
 None does very well.
 
 Start at 0.
@@ -301,6 +311,14 @@ fintegrate(x, y, 'midpoint', value = 'total')
 fintegrate(x, y, 'left', value = 'total')
 fintegrate(x, y, 'right', value = 'total')
 fintegrate(x, y, 'trap', value = 'total')
+```
+
+```{r}
+plot(x, -exp(-x) + exp(-min(x)), ylim = c(0, 1.5))
+lines(x, fintegrate(x, y, 'midpoint'), col = 'orange')
+lines(x, fintegrate(x, y, 'left'), col = 'red')
+lines(x, fintegrate(x, y, 'right'), col = 'blue')
+lines(x, fintegrate(x, y, 'trap'), col = 'green', lty = 2)
 ```
 
 Prove that all methods become accurate with very high resolution.
@@ -329,6 +347,14 @@ fintegrate(x, y, 'midpoint', value = 'total')
 fintegrate(x, y, 'left', value = 'total')
 fintegrate(x, y, 'right', value = 'total')
 fintegrate(x, y, 'trap', value = 'total')
+```
+
+```{r}
+plot(x, -exp(-x) + exp(-min(x)), col = 'gray')
+lines(x, fintegrate(x, y, 'midpoint'), col = 'orange')
+lines(x, fintegrate(x, y, 'left'), col = 'red')
+lines(x, fintegrate(x, y, 'right'), col = 'blue')
+lines(x, fintegrate(x, y, 'trap'), col = 'green', lty = 2)
 ```
 
 Note that data need not be sorted by x.
