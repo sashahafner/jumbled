@@ -1,6 +1,6 @@
 # Integration of interval-based rate measurements
 
-fintegrate <- function(x, y, method = 'midpoint', start = min(x), end = max(x), ystart = y[which.min(x)], value = 'all') {
+mintegrate <- function(x, y, method = 'midpoint', start = min(x), end = max(x), ystart = y[which.min(x)], value = 'all') {
 
   method <- substr(tolower(method), 1, 1)
 

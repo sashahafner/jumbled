@@ -209,11 +209,11 @@ Saves png and pdf by default, add more with `type` argument.
 Use `...` optional arguments for more flexibility.
 
 
-## `fintegrate`
+## `mintegrate`
 Integrate *f*lux measurements for emission.
 
 ```{r}
-source('fintegrate.R')
+source('mintegrate.R')
 ```
 
 ### 1. Linear
@@ -227,20 +227,20 @@ plot(x, y)
 Exact integral is `10 * 10 / 2 = 50`.
 
 ```{r}
-fintegrate(x, y, 'midpoint')
-fintegrate(x, y, 'left')
-fintegrate(x, y, 'right')
-fintegrate(x, y, 'trap')
+mintegrate(x, y, 'midpoint')
+mintegrate(x, y, 'left')
+mintegrate(x, y, 'right')
+mintegrate(x, y, 'trap')
 ```
 
 Note differences on the way up.
 
 ```{r}
 plot(0:10, x * y / 2, ylim = c(0, 60))
-lines(0:10, fintegrate(x, y, 'midpoint'), col = 'orange')
-lines(0:10, fintegrate(x, y, 'left'), col = 'red')
-lines(0:10, fintegrate(x, y, 'right'), col = 'blue')
-lines(0:10, fintegrate(x, y, 'trap'), col = 'green', lty = 2)
+lines(0:10, mintegrate(x, y, 'midpoint'), col = 'orange')
+lines(0:10, mintegrate(x, y, 'left'), col = 'red')
+lines(0:10, mintegrate(x, y, 'right'), col = 'blue')
+lines(0:10, mintegrate(x, y, 'trap'), col = 'green', lty = 2)
 ```
 
 Leave out 0 (say first measurement is at time = 1).
@@ -254,19 +254,19 @@ plot(x, y)
 Exact integral depends on what occurred before t = 1.
 
 ```{r}
-fintegrate(x, y, 'midpoint')
-fintegrate(x, y, 'left')
-fintegrate(x, y, 'right')
-fintegrate(x, y, 'trap')
+mintegrate(x, y, 'midpoint')
+mintegrate(x, y, 'left')
+mintegrate(x, y, 'right')
+mintegrate(x, y, 'trap')
 ```
 
 Can incorporate assumptions.
 
 ```{r}
-fintegrate(x, y, 'midpoint', start = 0)
-fintegrate(x, y, 'left', start = 0)
-fintegrate(x, y, 'right', start = 0)
-fintegrate(x, y, 'trap', start = 0, ystart = 0)
+mintegrate(x, y, 'midpoint', start = 0)
+mintegrate(x, y, 'left', start = 0)
+mintegrate(x, y, 'right', start = 0)
+mintegrate(x, y, 'trap', start = 0, ystart = 0)
 ```
 
 # Nonlinear
@@ -281,19 +281,19 @@ Exact integral from 1:10 is `exp(-10) - exp(-1)` = 0.3678.
 From 0 it is 1.0.
 
 ```{r}
-fintegrate(x, y, 'midpoint', value = 'total')
-fintegrate(x, y, 'left', value = 'total')
-fintegrate(x, y, 'right', value = 'total')
-fintegrate(x, y, 'trap', value = 'total')
+mintegrate(x, y, 'midpoint', value = 'total')
+mintegrate(x, y, 'left', value = 'total')
+mintegrate(x, y, 'right', value = 'total')
+mintegrate(x, y, 'trap', value = 'total')
 ```
 
 ```{r}
 plot(0:10, -exp(-(0:10)) + exp(-min(0:10)), col = 'red')
 points(x, -exp(-x) + exp(-min(x)), ylim = c(0, 0.7))
-lines(x, fintegrate(x, y, 'midpoint'), col = 'orange')
-lines(x, fintegrate(x, y, 'left'), col = 'red')
-lines(x, fintegrate(x, y, 'right'), col = 'blue')
-lines(x, fintegrate(x, y, 'trap'), col = 'green', lty = 2)
+lines(x, mintegrate(x, y, 'midpoint'), col = 'orange')
+lines(x, mintegrate(x, y, 'left'), col = 'red')
+lines(x, mintegrate(x, y, 'right'), col = 'blue')
+lines(x, mintegrate(x, y, 'trap'), col = 'green', lty = 2)
 ```
 
 None is perfect, but midpoint and trapezoid (identical in this implementation) are the best, only slightly overestimating.
@@ -311,7 +311,7 @@ The `start` argument can extend the first rate back to 0 or any arbitrary starti
 x <- 1:10
 plot(0:10, -exp(-(0:10)) + exp(-min(0:10)), col = 'red')
 points(x, -exp(-x) + exp(-min(x)), ylim = c(0, 0.7))
-lines(x, fintegrate(x, y, 'midpoint', start = 0), col = 'orange')
+lines(x, mintegrate(x, y, 'midpoint', start = 0), col = 'orange')
 ```
 
 But measurements are needed at or closer to 0 to do really well with this function.
@@ -324,18 +324,18 @@ plot(x, y, type = 'l')
 ```
 
 ```{r}
-fintegrate(x, y, 'midpoint', value = 'total')
-fintegrate(x, y, 'left', value = 'total')
-fintegrate(x, y, 'right', value = 'total')
-fintegrate(x, y, 'trap', value = 'total')
+mintegrate(x, y, 'midpoint', value = 'total')
+mintegrate(x, y, 'left', value = 'total')
+mintegrate(x, y, 'right', value = 'total')
+mintegrate(x, y, 'trap', value = 'total')
 ```
 
 ```{r}
 plot(x, -exp(-x) + exp(-min(x)), ylim = c(0, 1.5))
-lines(x, fintegrate(x, y, 'midpoint'), col = 'orange')
-lines(x, fintegrate(x, y, 'left'), col = 'red')
-lines(x, fintegrate(x, y, 'right'), col = 'blue')
-lines(x, fintegrate(x, y, 'trap'), col = 'green', lty = 2)
+lines(x, mintegrate(x, y, 'midpoint'), col = 'orange')
+lines(x, mintegrate(x, y, 'left'), col = 'red')
+lines(x, mintegrate(x, y, 'right'), col = 'blue')
+lines(x, mintegrate(x, y, 'trap'), col = 'green', lty = 2)
 ```
 
 We can prove that all methods become accurate with very high resolution.
@@ -347,10 +347,10 @@ plot(x, y, type = 'l')
 ```
 
 ```{r}
-fintegrate(x, y, 'midpoint', value = 'total')
-fintegrate(x, y, 'left', value = 'total')
-fintegrate(x, y, 'right', value = 'total')
-fintegrate(x, y, 'trap', value = 'total')
+mintegrate(x, y, 'midpoint', value = 'total')
+mintegrate(x, y, 'left', value = 'total')
+mintegrate(x, y, 'right', value = 'total')
+mintegrate(x, y, 'trap', value = 'total')
 ```
 
 ```{r}
@@ -360,18 +360,18 @@ plot(x, y, type = 'l')
 ```
 
 ```{r}
-fintegrate(x, y, 'midpoint', value = 'total')
-fintegrate(x, y, 'left', value = 'total')
-fintegrate(x, y, 'right', value = 'total')
-fintegrate(x, y, 'trap', value = 'total')
+mintegrate(x, y, 'midpoint', value = 'total')
+mintegrate(x, y, 'left', value = 'total')
+mintegrate(x, y, 'right', value = 'total')
+mintegrate(x, y, 'trap', value = 'total')
 ```
 
 ```{r}
 plot(x, -exp(-x) + exp(-min(x)), col = 'gray')
-lines(x, fintegrate(x, y, 'midpoint'), col = 'orange')
-lines(x, fintegrate(x, y, 'left'), col = 'red')
-lines(x, fintegrate(x, y, 'right'), col = 'blue')
-lines(x, fintegrate(x, y, 'trap'), col = 'green', lty = 2)
+lines(x, mintegrate(x, y, 'midpoint'), col = 'orange')
+lines(x, mintegrate(x, y, 'left'), col = 'red')
+lines(x, mintegrate(x, y, 'right'), col = 'blue')
+lines(x, mintegrate(x, y, 'trap'), col = 'green', lty = 2)
 ```
 
 Note that data need not be sorted by x.
@@ -382,7 +382,7 @@ y <- exp(-x)
 ```
 
 ```{r}
-fintegrate(x, y, 'midpoint')
+mintegrate(x, y, 'midpoint')
 ```
 
 ```{r}
@@ -392,6 +392,6 @@ y <- exp(-x)
 ```
 
 ```{r}
-fintegrate(x, y, 'midpoint')
+mintegrate(x, y, 'midpoint')
 ```
 
