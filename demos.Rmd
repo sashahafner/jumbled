@@ -263,10 +263,10 @@ mintegrate(x, y, 'trap')
 Can incorporate assumptions.
 
 ```{r}
-mintegrate(x, y, 'midpoint', start = 0)
-mintegrate(x, y, 'left', start = 0)
-mintegrate(x, y, 'right', start = 0)
-mintegrate(x, y, 'trap', start = 0, ystart = 0)
+mintegrate(x, y, 'midpoint', lwr = 0)
+mintegrate(x, y, 'left', lwr = 0)
+mintegrate(x, y, 'right', lwr = 0)
+mintegrate(x, y, 'trap', lwr = 0, ylwr = 0)
 ```
 
 # Nonlinear
@@ -305,13 +305,13 @@ x <- 0:10
 plot(x, exp(-x))
 ```
 
-The `start` argument can extend the first rate back to 0 or any arbitrary starting point, which helps a bit.
+The `lwr` argument can extend the first rate back to 0 or any arbitrary starting point, which helps a bit.
 
 ```{r}
 x <- 1:10
 plot(0:10, -exp(-(0:10)) + exp(-min(0:10)), col = 'red')
 points(x, -exp(-x) + exp(-min(x)), ylim = c(0, 0.7))
-lines(x, mintegrate(x, y, 'midpoint', start = 0), col = 'orange')
+lines(x, mintegrate(x, y, 'midpoint', lwr = 0), col = 'orange')
 ```
 
 But measurements are needed at or closer to 0 to do really well with this function.
