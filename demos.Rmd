@@ -414,5 +414,15 @@ plot(x, int)
 mintegrate(x, y, value = 'xy')
 ```
 
+With different units, result will differ.
+It is up to the user to make sure y and x have same time unit!
 
+```{r}
+x <- difftime(now, now - 1:10, units = 'hours')
+y <- exp(-as.numeric(x * 3600))
+```
+
+```{r}
+mintegrate(x, y, value = 'xy')
+```
 
