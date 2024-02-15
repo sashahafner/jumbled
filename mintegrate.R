@@ -8,6 +8,12 @@ mintegrate <- function(x, y, method = 'midpoint', lwr = min(x), upr = max(x), yl
     stop('Lengths of x and y are not equal.')
   }
 
+  # Convert x to numeric (could be difftime for example)
+  if (!is.numeric(x) && !is.integer(x)) {
+    warning('Converting x to numeric. Check values with value = "xy".')
+    x <- as.numeric(x)
+  }
+
   # Sort
   ord <- (1:length(x))[order(x)]
   y <- y[order(x)]
@@ -34,9 +40,13 @@ mintegrate <- function(x, y, method = 'midpoint', lwr = min(x), upr = max(x), yl
   }
 
   if (value == 'all') {
-    return(a[ord])
+    return(a[order(ord)])
+  } else if (value == 'xy') {
+    return(cbind(x[order(ord)], a[order(ord)]))
   } else if (value == 'total') {
     return(a[which.max(x)])
+  } else {
+    stop('value argument not recognized.')
   }
 
 }

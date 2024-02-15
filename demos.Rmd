@@ -269,7 +269,7 @@ mintegrate(x, y, 'right', lwr = 0)
 mintegrate(x, y, 'trap', lwr = 0, ylwr = 0)
 ```
 
-# Nonlinear
+### Nonlinear
 
 ```{r}
 x <- 1:10
@@ -392,6 +392,27 @@ y <- exp(-x)
 ```
 
 ```{r}
-mintegrate(x, y, 'midpoint')
+int <- mintegrate(x, y, 'midpoint')
+plot(x, int)
 ```
+
+## difftime
+
+
+```{r}
+now <- Sys.time()
+x <- difftime(now, now - 1:10)
+y <- exp(-as.numeric(x))
+```
+
+```{r}
+int <- mintegrate(x, y)
+plot(x, int)
+```
+
+```{r}
+mintegrate(x, y, value = 'xy')
+```
+
+
 
