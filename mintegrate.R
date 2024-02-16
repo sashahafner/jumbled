@@ -1,11 +1,25 @@
 # Integration of interval-based rate measurements
 
-mintegrate <- function(x, y, method = 'midpoint', lwr = min(x), upr = max(x), ylwr = y[which.min(x)], value = 'all') {
+mintegrate <- function(x, y, method = 'midpoint', lwr = min(x), upr = max(x), ylwr = y[which.min(x)], value = 'all', by = NULL) {
 
   method <- substr(tolower(method), 1, 1)
 
   if (length(x) != length(y)) {
     stop('Lengths of x and y are not equal.')
+  }
+
+  # Grouped operation
+  if (!is.null(by)) {
+    dat <- data.frame(x = x, y = y, g = by)
+    res <- by(dat, dat$g, function(d) 
+              mintegrate(d$x, d$y, method = method, lwr = lwr, 
+                         upr = upr, ylwr = ylwr, value = value), simplify = FALSE)
+    return(as.numeric(do.call(c, res)))
+  }
+
+  # Check for duplicates
+  if (any(duplicated(x))) {
+    stop('Duplicates in x.')
   }
 
   # Convert x to numeric (could be difftime for example)

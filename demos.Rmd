@@ -426,3 +426,23 @@ y <- exp(-as.numeric(x * 3600))
 mintegrate(x, y, value = 'xy')
 ```
 
+## Grouped
+
+```{r}
+x <- 0:10
+y <- exp(-x)
+```
+
+
+```{r}
+x <- c(x, x)
+y <- c(y, y + 0.2)
+g <- rep(c('a', 'b'), each = 11)
+```
+
+```{r}
+int <- mintegrate(x, y, by = g)
+plot(x, int, pch = g)
+```
+
+
