@@ -33,7 +33,7 @@ dfsumm <- function(x) {
     } else if(iclass == 'logical') {
       s[2:4, i] <- c(as.character(as.logical(c(min(yc), max(yc)))), paste(mean(yc), 'TRUE'))
     } else if(grepl('POSIX', iclass[1])) {
-      s[2:4, i] <- as.character(c(min(yc), max(yc), mean(yc)), format = '%Y-%m-%d %H:%M:%S') 
+      s[2:4, i] <- format(c(min(yc), max(yc), mean(yc)), format = '%Y-%m-%d %H:%M:%S') 
     } else {
       s[2:4, i] <- as.character(c(min(yc), max(yc), NA))
     }

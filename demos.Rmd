@@ -83,6 +83,16 @@ Generate a data frame summary more detailed and compact than `summary` output.
 dfsumm(attenu)
 ```
 
+Add date to check R v4.3 problem.
+
+```{r}
+attenu$date.time <- Sys.time()
+```
+
+```{r}
+dfsumm(attenu)
+```
+
 Compare to `summary`.
 
 ```{r}
