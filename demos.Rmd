@@ -455,4 +455,36 @@ int <- mintegrate(x, y, by = g)
 plot(x, int, pch = g)
 ```
 
+# consec
+
+```{r}
+source('consec.R')
+
+x <- data.frame(a = 1:20, b = c(1, 1, 1, 2, 2, 2, 4, 4, 5, 10, 10, 10, 10, 0, 0, 0, 0, 1, 1, 2))
+
+x$group <- consec(x$b)
+x
+x$group
+
+x$group <- consec(x$b, value = 'f')
+x
+x$group
+```
+
+With character variable.
+
+```{r}
+x <- data.frame(a = 1:20, b = letters[c(1, 1, 1, 2, 2, 2, 4, 4, 5, 10, 10, 10, 10, 9, 9, 9, 9, 1, 1, 2)])
+
+x$group <- consec(x$b)
+x
+x$group
+
+x$group <- consec(x$b, value = 'f')
+x
+x$group
+```
+
+
+
 
