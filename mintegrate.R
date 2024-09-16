@@ -35,22 +35,18 @@ mintegrate <- function(x, y, method = 'midpoint', lwr = min(x), upr = max(x), yl
 
   if (method == 'l') {
     a <- cumsum(y * diff(c(lwr, x)))
-  }
-
-  if (method == 'r') {
+  } else if (method == 'r') {
     a <- cumsum(y * diff(c(x, upr)))
-  }
-
-  if (method == 'm') {
+  } else if (method == 'm') {
     a <- cumsum(c(0, y[-length(y)] * diff(x)) / 2 +  y * diff(c(lwr, x)) / 2)
-  }
-
-  if (method == 't') {
+  } else if (method == 't') {
     x <- c(lwr, x)
     y <- c(ylwr, y)
     a <- cumsum((y[-length(y)] + diff(y) / 2) * diff(x)) 
     x <- x[-1]
     y <- y[-1]
+  } else {
+    stop('method argument not recognized')
   }
 
   if (value == 'all') {
