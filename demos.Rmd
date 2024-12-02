@@ -439,20 +439,26 @@ mintegrate(x, y, value = 'xy')
 ## Grouped
 
 ```{r}
+source('mintegrate.R')
 x <- 0:10
 y <- exp(-x)
 ```
 
+Test below includes shuffling of order!
+First version couldn't handle this, oops.
 
 ```{r}
 x <- c(x, x)
 y <- c(y, y + 0.2)
 g <- rep(c('a', 'b'), each = 11)
+dat <- data.frame(x = x, y = y, g = g)
+set.seed(123)
+dat <- dat[sample(nrow(dat)), ]
 ```
 
 ```{r}
-int <- mintegrate(x, y, by = g)
-plot(x, int, pch = g)
+dat$int <- mintegrate(dat$x, dat$y, by = dat$g)
+plot(dat$x, dat$int, pch = g)
 ```
 
 # consec

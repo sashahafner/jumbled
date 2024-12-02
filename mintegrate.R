@@ -10,11 +10,14 @@ mintegrate <- function(x, y, method = 'midpoint', lwr = min(x), upr = max(x), yl
 
   # Grouped operation
   if (!is.null(by)) {
-    dat <- data.frame(x = x, y = y, g = by)
+    dat <- data.frame(x = x, y = y, g = by, order = 1:length(x))
+    dat <- dat[order(dat$g, dat$x, dat$y), ]
     res <- by(dat, dat$g, function(d) 
               mintegrate(d$x, d$y, method = method, lwr = lwr, 
                          upr = upr, ylwr = ylwr, value = value), simplify = FALSE)
-    return(as.numeric(do.call(c, res)))
+    res <- as.numeric(do.call(c, res))
+    res <- res[order(dat$order)]
+    return(res)
   }
 
   # Check for duplicates
