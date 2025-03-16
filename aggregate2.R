@@ -6,7 +6,7 @@
 #dat
 #aggregate2(dat, x = c('a', 'b'), by = 'grp', FUN = list(mean = mean, sd = sd, n = length))
 
-aggregate2 <- function(dat, x, by, FUN, sep = '.', ...) {
+aggregate2 <- function(dat, x, by, FUN, sep = '.', sort = TRUE, ...) {
 
   # Convert data.table to data frame
   DT <- FALSE
@@ -26,6 +26,10 @@ aggregate2 <- function(dat, x, by, FUN, sep = '.', ...) {
       res <- d
     } else {
       res <- cbind(res, d[, !names(d) %in% by, drop = FALSE])
+    }
+    # Sort columns first by variable then function
+    if (sort) {
+      res <- res[, c(by, sort(names(res)[!names(res) %in% by]))]
     }
   }
 
