@@ -1,5 +1,5 @@
 
-rounddf <- function(x, digits = rep(2, ncol(x)), func = round, pad = FALSE) {
+rounddf <- function(x, digits = rep(2, ncol(x)), func = round, pad = FALSE, trans = NULL) {
 
   # Convert data.table to data frame
   DT <- FALSE
@@ -21,6 +21,9 @@ rounddf <- function(x, digits = rep(2, ncol(x)), func = round, pad = FALSE) {
   # Round
   for (i in 1:ncol(x)) {
     if (class(x[, i, drop = TRUE])[1] == 'numeric') {
+      if (inherits(trans, 'function')) {
+        x[, i] <- trans(x[, i])
+      }
       x[, i] <- func(x[, i], digits[i])
       # Pad with trailing zeroes (only works well in some cases)
       # Ignored if every row does not have decimal point
